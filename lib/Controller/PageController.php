@@ -95,18 +95,21 @@ class PageController extends Controller {
 	public function authorize($response_type, $client_id, $redirect_uri, $state = null) {
 		if (!is_string($response_type) || !is_string($client_id)
 			|| !is_string($redirect_uri) || (isset($state) && !is_string($state))) {
-			return new RedirectResponse(OC_Util::getDefaultPageUrl());
+	                throw new \Exception("authorize incomplete");
+   		        return new RedirectResponse(OC_Util::getDefaultPageUrl());
 		}
 
 		try {
 			/** @var Client $client */
 			$client = $this->clientMapper->findByIdentifier($client_id);
 		} catch (DoesNotExistException $exception) {
-			return new RedirectResponse(OC_Util::getDefaultPageUrl());
+		        throw $exception;
+                 	return new RedirectResponse(OC_Util::getDefaultPageUrl());
 		}
 
 		if (!Utilities::validateRedirectUri($client->getRedirectUri(), urldecode($redirect_uri), $client->getAllowSubdomains())) {
-			return new RedirectResponse(OC_Util::getDefaultPageUrl());
+	                throw new \Exception("redirect URI not valid");
+              		return new RedirectResponse(OC_Util::getDefaultPageUrl());
 		}
 
 		if (strcmp($response_type, 'code') !== 0) {

@@ -39,6 +39,10 @@ use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 use OCP\AppFramework\ApiController;
 
+use OCA\OAuth2\AppInfo\Application;
+use OCP\IUser;
+use OCP\IUserManager;
+
 class OAuthApiController extends ApiController {
 
 	/** @var ClientMapper */
@@ -173,13 +177,21 @@ class OAuthApiController extends ApiController {
 		$refreshToken->setUserId($userId);
 		$this->refreshTokenMapper->insert($refreshToken);
 
+                $app = new Application();
+
+		$userManager = $app->getContainer()->query('OCP\IUserManager');
+		$user = $userManager->get($accessToken->getUserId());
+
+
+
 		return new JSONResponse(
 			[
 				'access_token' => $accessToken->getToken(),
 				'token_type' => 'Bearer',
 				'expires_in' => 3600,
 				'refresh_token' => $refreshToken->getToken(),
-				'user_id' => $userId
+				'user_id' => $userId,
+                                'user_email' => $user->getEMailAddress()
 			]
 		);
 	}
