@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/owncloud/oauth2.svg?branch=master)](https://travis-ci.org/owncloud/oauth2)
 [![codecov](https://codecov.io/gh/owncloud/oauth2/branch/master/graph/badge.svg)](https://codecov.io/gh/owncloud/oauth2)
 
-This App implements the [OAuth 2.0 Authorization Code Flow](https://tools.ietf.org/html/rfc6749#section-4.1).
+This App implements the [OAuth 2.0 Authorization Code Flow](https://tools.ietf.org/html/rfc6749#section-4.1). It's forked from owncloud/oauth2 and is used for an experiment, IT IS NOT WORKING
 
 ## Installing the app
 Place the content of this repository in **owncloud/apps/oauth2**.
